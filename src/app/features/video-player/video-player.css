@@ -27,7 +27,7 @@
   align-items: center;
   gap: 12px;
   flex-direction: column;
-  margin-bottom: 16px; /* Added bottom margin for the entire form */
+  margin-bottom: 16px;
 }
 
 .vp-url-field {
@@ -38,7 +38,7 @@
   display: flex;
   gap: 12px;
   justify-content: center;
-  margin-bottom: 24px; /* Added bottom margin for Load and Reset buttons */
+  margin-bottom: 24px;
 }
 
 .vp-player {
@@ -90,7 +90,6 @@
   width: 80px;
 }
 
-/* Darken the volume slider track */
 :host ::ng-deep .vp-volume-slider .mdc-slider__track--inactive {
   background-color: rgba(0, 0, 0, 0.4);
 }
@@ -98,7 +97,6 @@
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-/* Dark mode - adjust volume slider track colors */
 body.dark-theme :host ::ng-deep .vp-volume-slider .mdc-slider__track--inactive {
   background-color: rgba(255, 255, 255, 0.4);
 }
@@ -106,7 +104,6 @@ body.dark-theme :host ::ng-deep .vp-volume-slider .mdc-slider__track--active_fil
   background-color: rgba(255, 255, 255, 0.7);
 }
 
-/* Welcome Section */
 .vp-welcome-section {
   background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(233, 30, 99, 0.1));
   border-radius: 12px;
@@ -157,7 +154,6 @@ body.dark-theme :host ::ng-deep .vp-volume-slider .mdc-slider__track--active_fil
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Dark theme adjustments */
 body.dark-theme .vp-welcome-section {
   background: linear-gradient(135deg, rgba(156, 39, 176, 0.2), rgba(233, 30, 99, 0.2));
   border-color: rgba(156, 39, 176, 0.3);
@@ -186,7 +182,6 @@ body.dark-theme .vp-link-buttons button:hover {
   border-color: rgba(233, 30, 99, 0.8) !important;
 }
 
-/* Additional dark mode text visibility fixes */
 body.dark-theme .vp-welcome-section {
   color: #fff;
 }

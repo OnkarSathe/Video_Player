@@ -1,6 +1,5 @@
 :host {
   display: block;
-  /* Leave room for fixed toolbar */
   padding-top: 72px;
   margin: 0 24px 24px;
 }
@@ -26,7 +25,6 @@
   flex: 1 1 auto;
 }
 
-/* Improve contrast of slide toggle within primary toolbar */
 .app-toolbar .mdc-form-field,
 .app-toolbar .mdc-form-field > label {
   color: var(--mat-sys-on-primary);
@@ -34,7 +32,6 @@
 }
 
 .app-toolbar .mdc-switch {
-  /* Selected (checked) appearance on primary background */
   --mdc-switch-selected-track-color: rgba(255, 255, 255, 0.35);
   --mdc-switch-selected-hover-track-color: rgba(255, 255, 255, 0.45);
   --mdc-switch-selected-focus-track-color: rgba(255, 255, 255, 0.45);
@@ -48,7 +45,6 @@
   --mdc-switch-selected-icon-color: var(--mat-sys-primary);
 }
 
-/* Unselected (unchecked) appearance on primary background */
 .app-toolbar .mdc-switch {
   --mdc-switch-unselected-track-color: rgba(255, 255, 255, 0.2);
   --mdc-switch-unselected-hover-track-color: rgba(255, 255, 255, 0.3);
