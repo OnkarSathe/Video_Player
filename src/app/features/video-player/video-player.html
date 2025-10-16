@@ -114,6 +114,16 @@
         <button
           mat-icon-button
           color="primary"
+          (click)="skipBackward30()"
+          [attr.aria-label]="'Skip backward 30 seconds'"
+          title="Skip backward 30s"
+        >
+          <mat-icon aria-hidden="true">replay_30</mat-icon>
+        </button>
+
+        <button
+          mat-icon-button
+          color="primary"
           (click)="skipBackward()"
           [attr.aria-label]="'Skip backward 10 seconds'"
           title="Skip backward 10s"
@@ -140,6 +150,16 @@
           title="Skip forward 10s"
         >
           <mat-icon aria-hidden="true">forward_10</mat-icon>
+        </button>
+
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="skipForward30()"
+          [attr.aria-label]="'Skip forward 30 seconds'"
+          title="Skip forward 30s"
+        >
+          <mat-icon aria-hidden="true">forward_30</mat-icon>
         </button>
 
         <div class="vp-spacer"></div>

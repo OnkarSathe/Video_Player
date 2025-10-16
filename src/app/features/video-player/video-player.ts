@@ -172,7 +172,9 @@ export class VideoPlayer implements OnDestroy {
       void el
         .play()
         .then(() => this.isPlaying.set(true))
-        .catch(() => {});
+        .catch(() => {
+          // Ignore play errors
+        });
     } else {
       el.pause();
       this.isPlaying.set(false);
@@ -197,6 +199,20 @@ export class VideoPlayer implements OnDestroy {
     const el = this.videoElRef?.nativeElement;
     if (!el) return;
     el.currentTime = Math.min(el.currentTime + CONFIG.VIDEO.SKIP_SECONDS, this.duration());
+    this.currentTime.set(el.currentTime);
+  }
+
+  protected skipBackward30(): void {
+    const el = this.videoElRef?.nativeElement;
+    if (!el) return;
+    el.currentTime = Math.max(el.currentTime - 30, 0);
+    this.currentTime.set(el.currentTime);
+  }
+
+  protected skipForward30(): void {
+    const el = this.videoElRef?.nativeElement;
+    if (!el) return;
+    el.currentTime = Math.min(el.currentTime + 30, this.duration());
     this.currentTime.set(el.currentTime);
   }
 

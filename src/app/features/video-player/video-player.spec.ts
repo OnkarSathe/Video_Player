@@ -138,6 +138,37 @@ describe('VideoPlayerComponent', () => {
     expect(mockVideo.currentTime).toBe(30);
   });
 
+  it('should skip backward 30 seconds correctly', () => {
+    const mockVideo = {
+      currentTime: 50,
+      pause: jasmine.createSpy('pause'),
+      src: '',
+      load: jasmine.createSpy('load'),
+    };
+
+    component['videoElRef'] = { nativeElement: mockVideo } as any;
+
+    component['skipBackward30']();
+
+    expect(mockVideo.currentTime).toBe(20);
+  });
+
+  it('should skip forward 30 seconds correctly', () => {
+    const mockVideo = {
+      currentTime: 20,
+      pause: jasmine.createSpy('pause'),
+      src: '',
+      load: jasmine.createSpy('load'),
+    };
+
+    component['videoElRef'] = { nativeElement: mockVideo } as any;
+    component['duration'].set(100);
+
+    component['skipForward30']();
+
+    expect(mockVideo.currentTime).toBe(50);
+  });
+
   it('should change playback speed', () => {
     const mockVideo = {
       playbackRate: 1,
