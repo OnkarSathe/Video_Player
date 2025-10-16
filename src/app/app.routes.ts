@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
-import { Home } from './features/home/home';
+import { VideoPlayer } from './features/video-player/video-player';
 
 export const routes: Routes = [
-  { path: '', component: Home },
-  { path: '**', redirectTo: '' }
+  { path: '', redirectTo: 'video', pathMatch: 'full' },
+  { path: 'video', component: VideoPlayer },
+  { path: '**', redirectTo: 'video' },
 ];

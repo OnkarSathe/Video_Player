@@ -1,0 +1,266 @@
+<div class="vp-container">
+  <!-- Welcome Section -->
+  <div class="vp-welcome-section">
+    <h2>🎬 Video Player with Timeline Preview</h2>
+    <p>
+      Load any MP4 video to see it with interactive timeline thumbnails. Click on thumbnails to jump
+      to specific moments!
+    </p>
+
+    <div class="vp-example-links">
+      <h3>📹 Try these example videos:</h3>
+      <div class="vp-link-buttons">
+        <button
+          mat-stroked-button
+          color="primary"
+          (click)="loadExampleVideo(CONFIG.EXAMPLE_VIDEOS.SINTEL)"
+        >
+          <mat-icon>movie</mat-icon>
+          Sintel (15 min)
+        </button>
+        <button
+          mat-stroked-button
+          color="primary"
+          (click)="loadExampleVideo(CONFIG.EXAMPLE_VIDEOS.BIG_BUCK_BUNNY)"
+        >
+          <mat-icon>movie</mat-icon>
+          Big Buck Bunny (10 min)
+        </button>
+        <button
+          mat-stroked-button
+          color="accent"
+          (click)="loadExampleVideo(CONFIG.EXAMPLE_VIDEOS.TEARS_OF_STEEL)"
+        >
+          <mat-icon>movie</mat-icon>
+          Tears of Steel (12 min)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <form class="vp-url-form" (submit)="$event.preventDefault(); onLoadUrl()">
+    <mat-form-field appearance="outline" class="vp-url-field">
+      <mat-label>MP4 URL</mat-label>
+      <input
+        matInput
+        [(ngModel)]="urlInput"
+        name="videoUrl"
+        placeholder="Enter video URL or use example links above..."
+      />
+    </mat-form-field>
+    <div class="vp-actions">
+      <button mat-flat-button color="primary" type="submit">Load</button>
+      <button mat-flat-button color="primary" type="button" (click)="urlInput = defaultUrl">
+        Reset
+      </button>
+    </div>
+  </form>
+
+  <div class="vp-player">
+    <!-- Error Message -->
+    <div
+      class="vp-error-message"
+      *ngIf="hasError()"
+      id="video-error"
+      role="alert"
+      aria-live="polite"
+    >
+      <mat-icon aria-hidden="true">error</mat-icon>
+      <span>{{ errorMessage() }}</span>
+      <button
+        mat-icon-button
+        (click)="errorMessage.set('')"
+        title="Dismiss error"
+        aria-label="Dismiss error message"
+      >
+        <mat-icon aria-hidden="true">close</mat-icon>
+      </button>
+    </div>
+
+    <!-- Video Skeleton Loader -->
+    <div class="vp-skeleton-loader" *ngIf="isVideoLoading()">
+      <div class="vp-skeleton-video">
+        <div class="vp-skeleton-content">
+          <div class="vp-skeleton-icon">
+            <mat-icon>play_circle_outline</mat-icon>
+          </div>
+          <div class="vp-skeleton-text">Loading video...</div>
+          <div class="vp-skeleton-progress">
+            <div class="vp-skeleton-progress-bar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <video
+      #videoEl
+      preload="metadata"
+      class="vp-video"
+      width="100%"
+      crossorigin="anonymous"
+      [attr.aria-label]="'Video player'"
+      [attr.aria-describedby]="hasError() ? 'video-error' : null"
+      (loadedmetadata)="onLoadedMetadata()"
+      (timeupdate)="onTimeUpdate()"
+      (loadstart)="onVideoLoadStart()"
+      (canplay)="onVideoCanPlay()"
+    >
+      <source [src]="videoUrl()" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+
+    <div class="vp-controls">
+      <div class="vp-control-row">
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="skipBackward()"
+          [attr.aria-label]="'Skip backward 10 seconds'"
+          title="Skip backward 10s"
+        >
+          <mat-icon aria-hidden="true">replay_10</mat-icon>
+        </button>
+
+        <button
+          mat-flat-button
+          color="primary"
+          type="button"
+          (click)="togglePlay()"
+          [attr.aria-label]="isPlaying() ? 'Pause video' : 'Play video'"
+        >
+          <mat-icon aria-hidden="true">{{ isPlaying() ? 'pause' : 'play_arrow' }}</mat-icon>
+          {{ isPlaying() ? 'Pause' : 'Play' }}
+        </button>
+
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="skipForward()"
+          [attr.aria-label]="'Skip forward 10 seconds'"
+          title="Skip forward 10s"
+        >
+          <mat-icon aria-hidden="true">forward_10</mat-icon>
+        </button>
+
+        <div class="vp-spacer"></div>
+
+        <mat-form-field appearance="outline" class="vp-speed-select">
+          <mat-label>Speed</mat-label>
+          <mat-select [value]="playbackRate()" (selectionChange)="onSpeedChange($event.value)">
+            @for (option of speedOptions; track option.value) {
+              <mat-option [value]="option.value">
+                {{ option.label }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="vp-control-row">
+        <div class="vp-time">{{ currentTimeLabel() }} / {{ durationLabel() }}</div>
+
+        <div class="vp-audio-controls">
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="toggleMute()"
+            [attr.aria-label]="isMuted() ? 'Unmute video' : 'Mute video'"
+            [title]="isMuted() ? 'Unmute' : 'Mute'"
+          >
+            <mat-icon aria-hidden="true">{{ isMuted() ? 'volume_off' : 'volume_up' }}</mat-icon>
+          </button>
+
+          <mat-slider
+            class="vp-volume-slider"
+            min="0"
+            max="1"
+            step="0.1"
+            [attr.aria-label]="'Volume control'"
+          >
+            <input matSliderThumb [ngModel]="volume()" (ngModelChange)="onVolumeChange($event)" />
+          </mat-slider>
+
+          <!-- Toggle thumbnail strip button -->
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="toggleThumbnailStrip()"
+            [attr.aria-label]="
+              showThumbnailStrip()
+                ? 'Hide video thumbnails timeline'
+                : 'Show video thumbnails timeline'
+            "
+            [title]="
+              showThumbnailStrip()
+                ? 'Hide video thumbnails timeline'
+                : 'Show video thumbnails timeline - Click thumbnails to jump to specific frames'
+            "
+          >
+            <mat-icon aria-hidden="true">timeline</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <mat-slider
+        class="vp-scrub"
+        min="0"
+        [max]="duration()"
+        [step]="0.1"
+        [attr.aria-label]="'Video timeline scrubber'"
+      >
+        <input matSliderThumb [ngModel]="currentTime()" (ngModelChange)="onScrubChange($event)" />
+      </mat-slider>
+    </div>
+
+    <!-- Thumbnail strip feature -->
+    <div class="vp-thumbnail-controls" *ngIf="showThumbnailStrip()">
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="toggleThumbnailExpansion()"
+        [attr.aria-label]="
+          thumbnailStripExpanded() ? 'Collapse thumbnail strip' : 'Expand thumbnail strip'
+        "
+        [title]="
+          thumbnailStripExpanded()
+            ? 'Collapse thumbnail strip'
+            : 'Expand thumbnail strip to see more thumbnails'
+        "
+      >
+        <mat-icon aria-hidden="true">{{
+          thumbnailStripExpanded() ? 'expand_less' : 'expand_more'
+        }}</mat-icon>
+      </button>
+    </div>
+
+    <div
+      class="vp-thumbnail-strip"
+      *ngIf="showThumbnailStrip()"
+      [class.expanded]="thumbnailStripExpanded()"
+    >
+      <!-- Current time indicator -->
+      <div class="vp-current-time-indicator" [style.left]="getCurrentTimePosition() + '%'">
+        <div class="vp-time-line"></div>
+        <div class="vp-time-handle"></div>
+      </div>
+
+      <div class="vp-thumbnail-timeline">
+        @for (thumbnail of thumbnailData(); track thumbnail.time) {
+          <div
+            class="vp-thumbnail-item"
+            (click)="onThumbnailClick(thumbnail.time)"
+            [class.active]="Math.abs(currentTime() - thumbnail.time) < 1"
+            [attr.aria-label]="'Jump to ' + formatTime(thumbnail.time)"
+            role="button"
+            tabindex="0"
+            (keydown.enter)="onThumbnailClick(thumbnail.time)"
+            (keydown.space)="onThumbnailClick(thumbnail.time)"
+          >
+            <img [src]="thumbnail.thumbnail" [alt]="'Frame at ' + formatTime(thumbnail.time)" />
+            <div class="vp-thumbnail-time">{{ formatTime(thumbnail.time) }}</div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

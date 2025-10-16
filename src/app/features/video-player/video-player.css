@@ -1,0 +1,493 @@
+/* CSS Custom Properties for theming */
+:root {
+  --vp-primary-color: #e91e63;
+  --vp-accent-color: #9c27b0;
+  --vp-error-color: #f44336;
+  --vp-success-color: #4caf50;
+  --vp-warning-color: #ff9800;
+  --vp-background-light: #f5f5f5;
+  --vp-background-dark: #2a2a2a;
+  --vp-text-light: #333;
+  --vp-text-dark: #ccc;
+  --vp-border-radius: 8px;
+  --vp-spacing-sm: 8px;
+  --vp-spacing-md: 16px;
+  --vp-spacing-lg: 24px;
+  --vp-transition: all 0.2s ease;
+}
+
+.vp-container {
+  display: grid;
+  gap: var(--vp-spacing-md);
+  margin-top: var(--vp-spacing-sm);
+}
+
+.vp-url-form {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-direction: column;
+  margin-bottom: 16px; /* Added bottom margin for the entire form */
+}
+
+.vp-url-field {
+  width: 100%;
+}
+
+.vp-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 24px; /* Added bottom margin for Load and Reset buttons */
+}
+
+.vp-player {
+  display: block;
+  position: relative;
+  border-radius: var(--vp-border-radius);
+  overflow: hidden;
+}
+
+.vp-video {
+  width: 100%;
+  max-height: 70vh;
+  background: #000;
+}
+
+.vp-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.vp-control-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.vp-time {
+  font-variant-numeric: tabular-nums;
+  margin-right: auto;
+}
+
+.vp-spacer {
+  flex: 1 1 auto;
+}
+
+.vp-speed-select {
+  min-width: 100px;
+}
+
+.vp-audio-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vp-volume-slider {
+  width: 80px;
+}
+
+/* Darken the volume slider track */
+:host ::ng-deep .vp-volume-slider .mdc-slider__track--inactive {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+:host ::ng-deep .vp-volume-slider .mdc-slider__track--active_fill {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Dark mode - adjust volume slider track colors */
+body.dark-theme :host ::ng-deep .vp-volume-slider .mdc-slider__track--inactive {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+body.dark-theme :host ::ng-deep .vp-volume-slider .mdc-slider__track--active_fill {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Welcome Section */
+.vp-welcome-section {
+  background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(233, 30, 99, 0.1));
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(156, 39, 176, 0.2);
+}
+
+.vp-welcome-section h2 {
+  margin: 0 0 12px 0;
+  color: var(--mat-sys-primary);
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.vp-welcome-section p {
+  margin: 0 0 20px 0;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.vp-example-links h3 {
+  margin: 0 0 16px 0;
+  color: var(--mat-sys-primary);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.vp-link-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.vp-link-buttons button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.vp-link-buttons button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Dark theme adjustments */
+body.dark-theme .vp-welcome-section {
+  background: linear-gradient(135deg, rgba(156, 39, 176, 0.2), rgba(233, 30, 99, 0.2));
+  border-color: rgba(156, 39, 176, 0.3);
+}
+
+body.dark-theme .vp-welcome-section h2 {
+  color: #e91e63 !important;
+}
+
+body.dark-theme .vp-welcome-section p {
+  color: rgba(233, 30, 99, 0.8) !important;
+}
+
+body.dark-theme .vp-example-links h3 {
+  color: #e91e63 !important;
+}
+
+body.dark-theme .vp-link-buttons button {
+  color: #e91e63 !important;
+  border-color: rgba(233, 30, 99, 0.5) !important;
+  background: rgba(233, 30, 99, 0.1) !important;
+}
+
+body.dark-theme .vp-link-buttons button:hover {
+  background: rgba(233, 30, 99, 0.2) !important;
+  border-color: rgba(233, 30, 99, 0.8) !important;
+}
+
+/* Additional dark mode text visibility fixes */
+body.dark-theme .vp-welcome-section {
+  color: #fff;
+}
+
+body.dark-theme .vp-welcome-section * {
+  color: inherit;
+}
+
+body.dark-theme .vp-link-buttons button mat-icon {
+  color: #e91e63 !important;
+}
+
+/* Ensure all text in welcome section uses pink theme in dark mode */
+body.dark-theme .vp-welcome-section h2,
+body.dark-theme .vp-welcome-section h3 {
+  color: #e91e63 !important;
+}
+
+body.dark-theme .vp-welcome-section p {
+  color: rgba(233, 30, 99, 0.8) !important;
+}
+
+/* Video Skeleton Loader */
+.vp-skeleton-loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.vp-skeleton-video {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.vp-skeleton-content {
+  text-align: center;
+  color: #666;
+}
+
+.vp-skeleton-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  animation: pulse 2s infinite;
+}
+
+.vp-skeleton-text {
+  font-size: 16px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.vp-skeleton-progress {
+  width: 200px;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.vp-skeleton-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #e91e63, #9c27b0);
+  border-radius: 2px;
+  animation: loading 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Dark mode skeleton loader */
+body.dark-theme .vp-skeleton-loader {
+  background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+}
+
+body.dark-theme .vp-skeleton-content {
+  color: #ccc;
+}
+
+body.dark-theme .vp-skeleton-progress {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .vp-skeleton-progress-bar {
+  background: linear-gradient(90deg, #e91e63, #9c27b0);
+}
+
+/* Error Message */
+.vp-error-message {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--vp-error-color);
+  color: white;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: var(--vp-spacing-sm);
+  z-index: 20;
+  border-radius: var(--vp-border-radius) var(--vp-border-radius) 0 0;
+  transition: var(--vp-transition);
+}
+
+.vp-error-message mat-icon {
+  color: white;
+}
+
+.vp-error-message button {
+  margin-left: auto;
+}
+
+/* Dark mode error message */
+body.dark-theme .vp-error-message {
+  background: #d32f2f;
+}
+
+.vp-scrub {
+  width: 100%;
+}
+
+/* Thumbnail strip styles */
+.vp-thumbnail-controls {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0;
+  margin-bottom: 16px; /* Added bottom margin for better spacing */
+}
+
+.vp-thumbnail-strip {
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 12px;
+  margin-bottom: 24px; /* Added bottom margin */
+  max-height: 120px; /* Fixed height for better visibility */
+  min-height: 120px; /* Ensure consistent height */
+  overflow: visible; /* Allow content to be visible */
+  transition: max-height 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--mat-sys-primary);
+  position: relative;
+}
+
+.vp-thumbnail-strip.expanded {
+  max-height: 120px;
+  min-height: 120px;
+}
+
+.vp-thumbnail-timeline {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 8px 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: var(--mat-sys-primary) transparent;
+  align-items: flex-start;
+  position: relative;
+}
+
+.vp-thumbnail-timeline::-webkit-scrollbar {
+  height: 6px;
+}
+
+.vp-thumbnail-timeline::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.vp-thumbnail-timeline::-webkit-scrollbar-thumb {
+  background: var(--mat-sys-primary);
+  border-radius: 3px;
+}
+
+.vp-thumbnail-item {
+  flex-shrink: 0;
+  width: 100px;
+  height: 60px;
+  position: relative;
+  cursor: pointer;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  background: #333;
+  display: flex;
+  flex-direction: column;
+}
+
+.vp-thumbnail-item:hover {
+  border-color: var(--mat-sys-primary);
+}
+
+.vp-thumbnail-item.active {
+  border-color: #fff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.vp-thumbnail-item img {
+  width: 100%;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 4px 4px 0 0;
+}
+
+.vp-thumbnail-time {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 9px;
+  text-align: center;
+  padding: 3px 2px;
+  font-weight: 500;
+  border-radius: 0 0 4px 4px;
+}
+
+/* Current time indicator */
+.vp-current-time-indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.vp-time-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #fff;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+}
+
+.vp-time-handle {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+}
+
+/* Darken the slider track (inactive + active portions) */
+:host ::ng-deep .vp-scrub .mdc-slider__track--inactive {
+  background-color: rgba(0, 0, 0, 0.28);
+}
+:host ::ng-deep .vp-scrub .mdc-slider__track--active_fill {
+  background-color: rgba(0, 0, 0, 0.55);
+}
+
+/* Dark mode - adjust slider track colors for better visibility */
+body.dark-theme :host ::ng-deep .vp-scrub .mdc-slider__track--inactive {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+body.dark-theme :host ::ng-deep .vp-scrub .mdc-slider__track--active_fill {
+  background-color: var(--mat-sys-primary);
+}
+
+/* Improve button contrast in dark mode */
+body.dark-theme .mat-mdc-button-base.mat-mdc-unelevated-button,
+body.dark-theme .mat-mdc-button-base.mat-mdc-raised-button,
+body.dark-theme .mat-mdc-button-base.mat-mdc-outlined-button {
+  --mdc-filled-button-container-color: var(--mat-sys-primary);
+  --mdc-filled-button-label-text-color: var(--mat-sys-on-primary);
+}
